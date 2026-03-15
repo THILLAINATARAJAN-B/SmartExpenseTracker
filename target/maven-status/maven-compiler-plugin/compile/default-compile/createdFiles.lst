@@ -9,11 +9,14 @@ com\smartexpense\dto\ExpenseDTO.class
 com\smartexpense\repository\BudgetRepository.class
 com\smartexpense\service\BudgetService.class
 com\smartexpense\dto\BudgetDTO$BudgetDTOBuilder.class
+com\smartexpense\security\JwtAuthenticationEntryPoint.class
 com\smartexpense\entity\User$UserBuilder.class
 com\smartexpense\controller\UserController.class
+com\smartexpense\controller\AuthController.class
 com\smartexpense\dto\ExpenseDTO$ExpenseDTOBuilder.class
 com\smartexpense\SmartExpenseTrackerApplication.class
 com\smartexpense\dto\DashboardDTO.class
+com\smartexpense\security\JwtAuthenticationFilter.class
 com\smartexpense\config\SecurityConfig.class
 com\smartexpense\entity\User.class
 com\smartexpense\dto\UserDTO.class
@@ -21,8 +24,10 @@ com\smartexpense\service\CsvExportService.class
 com\smartexpense\service\UserService.class
 com\smartexpense\exception\GlobalExceptionHandler.class
 com\smartexpense\entity\Budget.class
+com\smartexpense\security\JwtUtil.class
 com\smartexpense\entity\Expense.class
 com\smartexpense\repository\UserRepository.class
+com\smartexpense\config\JwtConfig.class
 com\smartexpense\controller\CsvExportController.class
 com\smartexpense\dto\UserDTO$UserDTOBuilder.class
 com\smartexpense\entity\Budget$BudgetBuilder.class

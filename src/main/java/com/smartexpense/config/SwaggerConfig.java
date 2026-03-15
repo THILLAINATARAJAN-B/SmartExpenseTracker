@@ -2,7 +2,6 @@ package com.smartexpense.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -12,23 +11,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
+    private static final String SECURITY_SCHEME_NAME = "Bearer Authentication";
+
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Smart Expense Tracker API")
-                        .version("1.0.0")
-                        .description("REST API for managing personal expenses with budget alerts")
-                        .contact(new Contact()
-                                .name("SmartExpense Dev")
-                                .email("dev@smartexpense.com")))
-                // Add Basic Auth security scheme to Swagger UI
-                .addSecurityItem(new SecurityRequirement().addList("basicAuth"))
+                        .description("REST API with JWT Authentication")
+                        .version("1.0.0"))
+                .addSecurityItem(new SecurityRequirement()
+                        .addList(SECURITY_SCHEME_NAME))
                 .components(new Components()
-                        .addSecuritySchemes("basicAuth",
+                        .addSecuritySchemes(SECURITY_SCHEME_NAME,
                                 new SecurityScheme()
+                                        .name(SECURITY_SCHEME_NAME)
                                         .type(SecurityScheme.Type.HTTP)
-                                        .scheme("basic")
-                                        .description("Enter email as username and password")));
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
     }
 }

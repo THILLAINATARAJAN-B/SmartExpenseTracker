@@ -1,0 +1,4 @@
+com\smartexpense\service\BudgetServiceTest.class
+com\smartexpense\controller\ExpenseControllerTest.class
+com\smartexpense\service\ExpenseServiceTest.class
+com\smartexpense\service\UserServiceTest.class

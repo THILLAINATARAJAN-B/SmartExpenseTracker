@@ -27,12 +27,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(dto));
     }
 
+    // ✅ Now returns { "token": "eyJ..." }
     @PostMapping("/login")
     @Operation(summary = "Login with email and password")
-    public ResponseEntity<UserDTO> login(@RequestBody Map<String, String> credentials) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
         String password = credentials.get("password");
-        return ResponseEntity.ok(userService.login(email, password));
+        String token = userService.login(email, password);
+        return ResponseEntity.ok(Map.of("token", token));  // ← clean JWT response
     }
 
     @GetMapping("/{id}")
