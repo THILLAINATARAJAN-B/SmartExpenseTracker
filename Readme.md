@@ -22,6 +22,8 @@
 
 </div>
 
+![App Poster](assets/posterSET.png)
+
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
