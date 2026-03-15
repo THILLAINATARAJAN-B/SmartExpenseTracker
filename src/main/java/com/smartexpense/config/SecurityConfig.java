@@ -6,8 +6,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,6 +22,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // This suppresses the auto-generated password warning
+    // and gives Swagger UI a fixed login credential
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        var user = User.builder()
+                .username("admin")
+                .password(encoder.encode("admin123"))
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(user);
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -26,7 +41,7 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Allow Swagger UI and API docs without authentication
+                // Swagger UI — fully public
                 .requestMatchers(
                     "/swagger-ui.html",
                     "/swagger-ui/**",
@@ -34,12 +49,15 @@ public class SecurityConfig {
                     "/api-docs",
                     "/v3/api-docs/**"
                 ).permitAll()
-                // Allow register and login without authentication
-                .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                // All other requests must be authenticated
+                // Your app's register and login — public
+                .requestMatchers(
+                    "/api/users/register",
+                    "/api/users/login"
+                ).permitAll()
+                // Everything else requires Basic Auth
                 .anyRequest().authenticated()
             )
-            .httpBasic(basic -> {});  // Enable Basic Auth for Swagger testing
+            .httpBasic(basic -> {});
 
         return http.build();
     }

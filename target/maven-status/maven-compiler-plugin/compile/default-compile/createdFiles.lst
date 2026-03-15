@@ -14,13 +14,16 @@ com\smartexpense\controller\UserController.class
 com\smartexpense\dto\ExpenseDTO$ExpenseDTOBuilder.class
 com\smartexpense\SmartExpenseTrackerApplication.class
 com\smartexpense\dto\DashboardDTO.class
+com\smartexpense\config\SecurityConfig.class
 com\smartexpense\entity\User.class
 com\smartexpense\dto\UserDTO.class
+com\smartexpense\service\CsvExportService.class
 com\smartexpense\service\UserService.class
 com\smartexpense\exception\GlobalExceptionHandler.class
 com\smartexpense\entity\Budget.class
 com\smartexpense\entity\Expense.class
 com\smartexpense\repository\UserRepository.class
+com\smartexpense\controller\CsvExportController.class
 com\smartexpense\dto\UserDTO$UserDTOBuilder.class
 com\smartexpense\entity\Budget$BudgetBuilder.class
 com\smartexpense\controller\ExpenseController.class
