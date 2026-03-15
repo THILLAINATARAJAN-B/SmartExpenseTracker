@@ -15,7 +15,11 @@
 
 **Authenticate · Track expenses · Manage budgets · Export CSV reports**
 
-[Getting Started](#-installation--setup) · [Features](#-features) · [API Integration](#-api-integration) · [Models](#-models) · [License](#-license)
+[Getting Started](#-installation--setup) · [Screenshots](#-screenshots) · [Features](#-features) · [API Integration](#-api-integration) · [Models](#-models) · [License](#-license)
+
+---
+
+![App Poster](src/assets/images/posterSET.png)
 
 ---
 
@@ -25,6 +29,7 @@
 
 - [Overview](#-overview)
 - [Tech Stack](#-tech-stack)
+- [Screenshots](#-screenshots)
 - [Project Structure](#-project-structure)
 - [Prerequisites](#-prerequisites)
 - [Installation & Setup](#-installation--setup)
@@ -66,6 +71,33 @@ All components are **standalone** (no NgModules), making the app lightweight and
 | RxJS | 7+ | Reactive HTTP & state handling |
 | Angular HttpClient | Built-in | REST API communication |
 | JWT (localStorage) | — | Auth token storage & decoding |
+
+---
+
+## 🖼️ Screenshots
+
+### 🔑 Login
+![Login Page](src/assets/images/login.png)
+
+---
+
+### 📝 Register
+![Register Page](src/assets/images/register.png)
+
+---
+
+### 📊 Dashboard
+![Dashboard](src/assets/images/dashboard.png)
+
+---
+
+### 💸 Expenses
+![Expenses Page](src/assets/images/expenses.png)
+
+---
+
+### 🎯 Budgets
+![Budgets Page](src/assets/images/budgets.png)
 
 ---
 
@@ -114,6 +146,14 @@ smart-expense-frontend/
 │   │   ├── app.component.ts
 │   │   ├── app.component.html
 │   │   └── app.routes.ts                   # Route definitions
+│   ├── assets/
+│   │   └── images/
+│   │       ├── posterSET.png               # App showcase poster
+│   │       ├── login.png
+│   │       ├── register.png
+│   │       ├── dashboard.png
+│   │       ├── expenses.png
+│   │       └── budgets.png
 │   ├── index.html
 │   ├── main.ts
 │   └── styles.css
