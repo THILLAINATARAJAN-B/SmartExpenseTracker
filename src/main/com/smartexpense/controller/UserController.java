@@ -1,5 +1,0 @@
-package main.com.smartexpense.controller;
-
-public class UserController {
-    
-}
