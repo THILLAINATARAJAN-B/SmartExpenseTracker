@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.btn { border-radius: 8px; }
+
+.alert { border-radius: 8px; }
+
+.table th { background-color: #f8f9fa; font-weight: 600; }

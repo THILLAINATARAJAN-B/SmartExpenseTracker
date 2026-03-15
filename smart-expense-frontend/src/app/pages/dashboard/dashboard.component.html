@@ -1,0 +1,107 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-0">
+        <i class="bi bi-speedometer2 me-2 text-primary"></i>Dashboard
+      </h2>
+      <p class="text-muted mb-0">{{ month }}/{{ year }} Overview</p>
+    </div>
+    <span class="badge bg-primary fs-6">
+      Welcome, {{ authService.getUserName() }}
+    </span>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 text-muted">Loading dashboard...</p>
+  </div>
+
+  <div *ngIf="!loading && dashboard">
+    <!-- Total Spent Card -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card text-white bg-primary">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="card-title mb-1 opacity-75">Total Spent This Month</p>
+                <h3 class="fw-bold mb-0">₹{{ dashboard.totalSpentThisMonth | number:'1.2-2' }}</h3>
+              </div>
+              <i class="bi bi-currency-rupee" style="font-size:2.5rem; opacity:0.5"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-success">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="card-title mb-1 opacity-75">Categories Tracked</p>
+                <h3 class="fw-bold mb-0">{{ objectKeys(dashboard.spentByCategory).length }}</h3>
+              </div>
+              <i class="bi bi-tags" style="font-size:2.5rem; opacity:0.5"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-white bg-info">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="card-title mb-1 opacity-75">Budgets Set</p>
+                <h3 class="fw-bold mb-0">{{ objectKeys(dashboard.budgetByCategory).length }}</h3>
+              </div>
+              <i class="bi bi-pie-chart" style="font-size:2.5rem; opacity:0.5"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget Alerts -->
+    <div class="card mb-4" *ngIf="objectKeys(dashboard.budgetAlerts).length > 0">
+      <div class="card-header fw-bold">
+        <i class="bi bi-bell me-2"></i>Budget Alerts
+      </div>
+      <div class="card-body">
+        <div *ngFor="let cat of objectKeys(dashboard.budgetAlerts)"
+             class="alert mb-2" [ngClass]="'alert-' + getAlertClass(dashboard.budgetAlerts[cat])">
+          <strong>{{ cat }}</strong> — {{ dashboard.budgetAlerts[cat] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="card" *ngIf="objectKeys(dashboard.spentByCategory).length > 0">
+      <div class="card-header fw-bold">
+        <i class="bi bi-bar-chart me-2"></i>Spending by Category
+      </div>
+      <div class="card-body">
+        <div *ngFor="let cat of objectKeys(dashboard.spentByCategory)" class="mb-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-semibold">{{ cat }}</span>
+            <span>₹{{ dashboard.spentByCategory[cat] | number:'1.2-2' }}
+              <span class="text-muted" *ngIf="dashboard.budgetByCategory[cat]">
+                / ₹{{ dashboard.budgetByCategory[cat] | number:'1.2-2' }}
+              </span>
+            </span>
+          </div>
+          <div class="progress" style="height: 10px;">
+            <div class="progress-bar"
+                 [ngClass]="getAlertClass(dashboard.budgetAlerts[cat] || '') === 'danger' ? 'bg-danger' : 'bg-success'"
+                 [style.width.%]="dashboard.budgetByCategory[cat] ?
+                   (dashboard.spentByCategory[cat] / dashboard.budgetByCategory[cat] * 100) : 100">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !dashboard" class="text-center py-5">
+    <i class="bi bi-graph-up text-muted" style="font-size: 4rem;"></i>
+    <p class="text-muted mt-2">No data yet. Add expenses and set budgets to see your dashboard.</p>
+  </div>
+</div>

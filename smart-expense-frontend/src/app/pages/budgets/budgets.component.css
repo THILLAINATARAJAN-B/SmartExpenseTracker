@@ -1,0 +1,17 @@
+table {
+  color: #212529 !important;
+  background-color: #ffffff !important;
+}
+
+thead th {
+  color: #212529 !important;
+}
+
+tbody tr td {
+  color: #212529 !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5 !important;
+  color: #212529 !important;
+}
