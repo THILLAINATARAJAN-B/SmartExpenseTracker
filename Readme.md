@@ -22,7 +22,7 @@
 
 </div>
 
-![App Poster](assets/posterSET.png)
+![App Poster](smart-expense-frontend/assets/posterSET.png)
 
 ## 📋 Table of Contents
 
