@@ -92,12 +92,12 @@ All components are **standalone** (no NgModules), making the app lightweight and
 ---
 
 ### 💸 Expenses
-![Expenses Page](assets/expenses.png)
+![Expenses Page](assets/expense.png)
 
 ---
 
 ### 🎯 Budgets
-![Budgets Page](assets/budgets.png)
+![Budgets Page](assets/budget.png)
 
 ---
 
