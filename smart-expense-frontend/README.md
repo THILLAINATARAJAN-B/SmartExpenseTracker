@@ -19,7 +19,7 @@
 
 ---
 
-![App Poster](smart-expense-frontend/assets/images/posterSET.png)
+![App Poster](assets/images/posterSET.png)
 
 ---
 
