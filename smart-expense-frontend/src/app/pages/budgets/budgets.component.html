@@ -3,6 +3,7 @@
 </div>
 
 <div class="container py-4">
+
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold mb-0">
@@ -14,43 +15,51 @@
   </div>
 
   <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
-  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="alert alert-danger"  *ngIf="errorMessage">{{ errorMessage }}</div>
 
-  <!-- ✅ Filter Bar -->
+  <!-- Filter Bar -->
   <div class="card mb-4 border-0 bg-light">
     <div class="card-body py-3">
       <div class="row g-2 align-items-end">
+
         <div class="col-md-3">
           <label class="form-label small fw-semibold mb-1">
             <i class="bi bi-tag me-1"></i>Category
           </label>
-          <select class="form-select form-select-sm" [(ngModel)]="filterCategory"
+          <select class="form-select form-select-sm"
+            [(ngModel)]="filterCategory"
             (ngModelChange)="applyFilters()">
             <option value="">All Categories</option>
             <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
           </select>
         </div>
+
         <div class="col-md-3">
           <label class="form-label small fw-semibold mb-1">
             <i class="bi bi-calendar-month me-1"></i>Month
           </label>
-          <select class="form-select form-select-sm" [(ngModel)]="filterMonth"
+          <select class="form-select form-select-sm"
+            [(ngModel)]="filterMonth"
             (ngModelChange)="applyFilters()">
             <option [value]="0">All Months</option>
             <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
           </select>
         </div>
+
         <div class="col-md-2">
           <label class="form-label small fw-semibold mb-1">
             <i class="bi bi-calendar me-1"></i>Year
           </label>
           <input type="number" class="form-control form-control-sm"
-            [(ngModel)]="filterYear" (ngModelChange)="applyFilters()"
+            [(ngModel)]="filterYear"
+            (ngModelChange)="applyFilters()"
             placeholder="e.g. 2026" min="2024">
         </div>
+
         <div class="col-md-4 d-flex align-items-end gap-2">
           <button class="btn btn-sm btn-outline-danger w-100"
-            (click)="clearFilters()" *ngIf="activeFilterCount > 0">
+            (click)="clearFilters()"
+            *ngIf="activeFilterCount > 0">
             <i class="bi bi-x-circle me-1"></i>Clear Filters
             <span class="badge bg-danger ms-1">{{ activeFilterCount }}</span>
           </button>
@@ -61,6 +70,7 @@
             Showing {{ filteredBudgets.length }} record(s)
           </span>
         </div>
+
       </div>
     </div>
   </div>
@@ -73,41 +83,49 @@
     </div>
     <div class="card-body">
       <div class="row g-3">
+
         <div class="col-md-3">
           <label class="form-label">Category *</label>
           <select class="form-select" [(ngModel)]="form.category">
             <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
           </select>
         </div>
+
         <div class="col-md-3">
           <label class="form-label">Monthly Limit (₹) *</label>
           <input type="number" class="form-control" [(ngModel)]="form.monthlyLimit" min="0">
         </div>
+
         <div class="col-md-2">
           <label class="form-label">Month</label>
           <select class="form-select" [(ngModel)]="form.month">
             <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
           </select>
         </div>
+
         <div class="col-md-2">
           <label class="form-label">Year</label>
           <input type="number" class="form-control" [(ngModel)]="form.year" min="2024">
         </div>
+
         <div class="col-12">
           <button class="btn btn-info text-white me-2" (click)="saveBudget()">
             <i class="bi bi-check2 me-1"></i>Save Budget
           </button>
           <button class="btn btn-secondary" (click)="showForm = false">Cancel</button>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Table -->
+  <!-- Budgets Table -->
   <div class="card">
     <div class="card-body p-0">
-      <table class="table table-hover mb-0" *ngIf="filteredBudgets.length > 0">
-        <table class="table table-hover table-bordered mb-0 text-dark">
+
+      <table class="table table-hover table-bordered mb-0 text-dark"
+        *ngIf="filteredBudgets.length > 0">
+        <thead class="table-info">
           <tr>
             <th>Category</th>
             <th>Monthly Limit</th>
@@ -119,7 +137,7 @@
         <tbody>
           <tr *ngFor="let b of filteredBudgets">
             <td><span class="badge bg-info text-dark">{{ b.category }}</span></td>
-            <td class="fw-bold text-info">₹{{ b.monthlyLimit | number:'1.2-2' }}</td>
+            <td class="fw-bold">₹{{ b.monthlyLimit | number:'1.2-2' }}</td>
             <td>{{ getMonthLabel(b.month) }}</td>
             <td>{{ b.year }}</td>
             <td>
@@ -130,12 +148,16 @@
           </tr>
         </tbody>
       </table>
-      <div *ngIf="!loading && dataLoaded && filteredBudgets.length === 0" class="text-center py-5">
+
+      <div *ngIf="!loading && dataLoaded && filteredBudgets.length === 0"
+        class="text-center py-5">
         <i class="bi bi-pie-chart text-muted" style="font-size:3rem"></i>
         <p class="text-muted mt-2">
           {{ activeFilterCount > 0 ? 'No budgets match your filters.' : 'No budgets set yet. Click "Set Budget" to start.' }}
         </p>
       </div>
+
     </div>
   </div>
+
 </div>

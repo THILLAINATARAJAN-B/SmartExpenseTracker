@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -17,7 +17,11 @@ export class LoginComponent {
   errorMessage = '';
   loading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef    // ← ADDED
+  ) {}
 
   login(): void {
     this.loading = true;
@@ -27,11 +31,13 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           this.loading = false;
+          this.cdr.detectChanges();   // ← ADDED
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.message || 'Invalid email or password';
+          this.cdr.detectChanges();   // ← ADDED
         }
       });
   }

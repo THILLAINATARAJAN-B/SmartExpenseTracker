@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -19,7 +19,11 @@ export class RegisterComponent {
   successMessage = '';
   loading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef    // ← ADDED
+  ) {}
 
   register(): void {
     this.loading = true;
@@ -30,11 +34,13 @@ export class RegisterComponent {
         next: () => {
           this.loading = false;
           this.successMessage = 'Account created! Redirecting to login...';
+          this.cdr.detectChanges();   // ← ADDED
           setTimeout(() => this.router.navigate(['/login']), 1500);
         },
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.message || 'Registration failed';
+          this.cdr.detectChanges();   // ← ADDED
         }
       });
   }
