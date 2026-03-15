@@ -77,27 +77,27 @@ All components are **standalone** (no NgModules), making the app lightweight and
 ## 🖼️ Screenshots
 
 ### 🔑 Login
-![Login Page](src/assets/images/login.png)
+![Login Page](assets/login.png)
 
 ---
 
 ### 📝 Register
-![Register Page](assets/images/register.png)
+![Register Page](assets/register.png)
 
 ---
 
 ### 📊 Dashboard
-![Dashboard](assets/images/dashboard.png)
+![Dashboard](assets/dashboard.png)
 
 ---
 
 ### 💸 Expenses
-![Expenses Page](assets/images/expenses.png)
+![Expenses Page](assets/expenses.png)
 
 ---
 
 ### 🎯 Budgets
-![Budgets Page](assets/images/budgets.png)
+![Budgets Page](assets/budgets.png)
 
 ---
 
