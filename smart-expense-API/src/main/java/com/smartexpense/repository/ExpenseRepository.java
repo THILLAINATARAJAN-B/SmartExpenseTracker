@@ -1,6 +1,8 @@
 package com.smartexpense.repository;
 
 import com.smartexpense.entity.Expense;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +18,9 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     // All expenses for a user
     List<Expense> findByUserId(Long userId);
 
+    // All expenses for a user — paginated
+    Page<Expense> findByUserId(Long userId, Pageable pageable);    // ← FIXED
+
     // Filter by category
     List<Expense> findByUserIdAndCategory(Long userId, String category);
 
@@ -26,7 +31,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findByUserIdAndCategoryAndDateBetween(
             Long userId, String category, LocalDate startDate, LocalDate endDate);
 
-    // Total spent in a month per category (used for budget alerts)
+    // Spent per category this month
     @Query("SELECT e.category, SUM(e.amount) FROM Expense e " +
            "WHERE e.user.id = :userId " +
            "AND MONTH(e.date) = :month " +

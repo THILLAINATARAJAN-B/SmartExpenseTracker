@@ -10,6 +10,7 @@ import com.smartexpense.repository.ExpenseRepository;
 import com.smartexpense.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -29,10 +30,11 @@ public class BudgetService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    // Set or update budget
+    @Transactional(rollbackFor = Exception.class)
     public BudgetDTO setBudget(BudgetDTO dto) {
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + dto.getUserId()));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "User not found: " + dto.getUserId()));
 
         Budget budget = budgetRepository
                 .findByUserIdAndCategoryAndMonthAndYear(
@@ -49,13 +51,13 @@ public class BudgetService {
         return toDTO(budgetRepository.save(budget));
     }
 
-    // Get all budgets for user for a given month/year
+    @Transactional(readOnly = true)
     public List<BudgetDTO> getBudgets(Long userId, int month, int year) {
         return budgetRepository.findByUserIdAndMonthAndYear(userId, month, year)
                 .stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    // Delete a budget
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBudget(Long id) {
         if (!budgetRepository.existsById(id)) {
             throw new ResourceNotFoundException("Budget not found: " + id);
@@ -63,35 +65,34 @@ public class BudgetService {
         budgetRepository.deleteById(id);
     }
 
-    // Dashboard: total spent, category breakdown, and budget alerts
+    @Transactional(readOnly = true)
     public DashboardDTO getDashboard(Long userId, int month, int year) {
-        // Total spent this month
         BigDecimal total = expenseRepository.findTotalSpentForMonth(userId, month, year);
 
-        // Spent per category
-        List<Object[]> spentRaw = expenseRepository.findSpentByCategoryForMonth(userId, month, year);
+        List<Object[]> spentRaw = expenseRepository
+                .findSpentByCategoryForMonth(userId, month, year);
         Map<String, BigDecimal> spentByCategory = new HashMap<>();
         for (Object[] row : spentRaw) {
             spentByCategory.put((String) row[0], (BigDecimal) row[1]);
         }
 
-        // Budget per category
-        List<Budget> budgets = budgetRepository.findByUserIdAndMonthAndYear(userId, month, year);
+        List<Budget> budgets = budgetRepository
+                .findByUserIdAndMonthAndYear(userId, month, year);
         Map<String, BigDecimal> budgetByCategory = new HashMap<>();
         for (Budget b : budgets) {
             budgetByCategory.put(b.getCategory(), b.getMonthlyLimit());
         }
 
-        // Budget alerts
         Map<String, String> alerts = new HashMap<>();
         for (Budget b : budgets) {
-            BigDecimal spent = spentByCategory.getOrDefault(b.getCategory(), BigDecimal.ZERO);
+            BigDecimal spent = spentByCategory.getOrDefault(
+                    b.getCategory(), BigDecimal.ZERO);
             if (spent.compareTo(b.getMonthlyLimit()) > 0) {
-                alerts.put(b.getCategory(), "⚠ BUDGET EXCEEDED! Spent: ₹" + spent +
-                        " | Limit: ₹" + b.getMonthlyLimit());
+                alerts.put(b.getCategory(), "⚠ BUDGET EXCEEDED! Spent: ₹"
+                        + spent + " | Limit: ₹" + b.getMonthlyLimit());
             } else {
-                alerts.put(b.getCategory(), "✅ OK. Spent: ₹" + spent +
-                        " | Limit: ₹" + b.getMonthlyLimit());
+                alerts.put(b.getCategory(), "✅ OK. Spent: ₹"
+                        + spent + " | Limit: ₹" + b.getMonthlyLimit());
             }
         }
 

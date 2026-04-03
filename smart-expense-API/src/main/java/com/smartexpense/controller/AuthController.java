@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -40,23 +39,20 @@ public class AuthController {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "User not found with email: " + email));
 
+        // ✅ Throw instead of manual map — GlobalExceptionHandler handles it
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("status", 401);
-            error.put("message", "Invalid email or password");
-            return ResponseEntity.status(401).body(error);
+            throw new IllegalArgumentException("Invalid email or password");
         }
 
         String token = jwtUtil.generateToken(email);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("type", "Bearer");
-        response.put("userId", user.getId());
-        response.put("name", user.getName());
-        response.put("email", user.getEmail());
-        response.put("message", "Login successful");
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "type", "Bearer",
+                "userId", user.getId(),
+                "name", user.getName(),
+                "email", user.getEmail(),
+                "message", "Login successful"
+        ));
     }
 }

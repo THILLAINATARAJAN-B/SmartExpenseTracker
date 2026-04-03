@@ -1,11 +1,14 @@
 <div class="min-vh-100 d-flex align-items-center justify-content-center">
-  <div class="card p-4" style="width: 420px;">
+  <div class="card p-4" style="width: 440px;">
+
+    <!-- Header -->
     <div class="text-center mb-4">
       <i class="bi bi-person-plus text-success" style="font-size: 3rem;"></i>
       <h3 class="mt-2 fw-bold">Create Account</h3>
       <p class="text-muted">Start tracking your expenses</p>
     </div>
 
+    <!-- Alerts -->
     <div class="alert alert-danger" *ngIf="errorMessage">
       <i class="bi bi-exclamation-circle me-2"></i>{{ errorMessage }}
     </div>
@@ -14,24 +17,85 @@
     </div>
 
     <form (ngSubmit)="register()">
+
+      <!-- Name -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Full Name</label>
         <input type="text" class="form-control" [(ngModel)]="name"
                name="name" placeholder="John Doe" required>
       </div>
+
+      <!-- Email -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Email</label>
         <input type="email" class="form-control" [(ngModel)]="email"
                name="email" placeholder="you@example.com" required>
       </div>
+
+      <!-- Password -->
       <div class="mb-3">
         <label class="form-label fw-semibold">Password</label>
         <input type="password" class="form-control" [(ngModel)]="password"
-               name="password" placeholder="••••••••" required>
+               name="password" placeholder="Min 8 chars with upper, number, symbol" required>
+
+        <!-- Strength Bar -->
+        <div class="mt-2" *ngIf="password.length > 0">
+          <div class="progress" style="height: 6px; border-radius: 4px;">
+            <div class="progress-bar bg-{{ passwordStrength.color }}"
+                 [style.width.%]="(passwordStrength.score / 5) * 100"
+                 style="transition: width 0.3s ease;">
+            </div>
+          </div>
+          <small class="text-{{ passwordStrength.color }} fw-semibold mt-1 d-block">
+            {{ passwordStrength.label }}
+          </small>
+        </div>
+
+        <!-- Requirements Checklist -->
+        <ul class="list-unstyled mt-2 mb-0 small" *ngIf="password.length > 0">
+          <li [class.text-success]="password.length >= 8"
+              [class.text-danger]="password.length > 0 && password.length < 8">
+            <i class="bi me-1"
+               [class.bi-check-circle-fill]="password.length >= 8"
+               [class.bi-x-circle-fill]="password.length < 8"></i>
+            At least 8 characters
+          </li>
+          <li [class.text-success]="/[A-Z]/.test(password)"
+              [class.text-danger]="password.length > 0 && !/[A-Z]/.test(password)">
+            <i class="bi me-1"
+               [class.bi-check-circle-fill]="/[A-Z]/.test(password)"
+               [class.bi-x-circle-fill]="!/[A-Z]/.test(password)"></i>
+            One uppercase letter
+          </li>
+          <li [class.text-success]="/[a-z]/.test(password)"
+              [class.text-danger]="password.length > 0 && !/[a-z]/.test(password)">
+            <i class="bi me-1"
+               [class.bi-check-circle-fill]="/[a-z]/.test(password)"
+               [class.bi-x-circle-fill]="!/[a-z]/.test(password)"></i>
+            One lowercase letter
+          </li>
+          <li [class.text-success]="/[0-9]/.test(password)"
+              [class.text-danger]="password.length > 0 && !/[0-9]/.test(password)">
+            <i class="bi me-1"
+               [class.bi-check-circle-fill]="/[0-9]/.test(password)"
+               [class.bi-x-circle-fill]="!/[0-9]/.test(password)"></i>
+            One number
+          </li>
+          <li [class.text-success]="/[!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?]/.test(password)"
+              [class.text-danger]="password.length > 0 && !/[!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?]/.test(password)">
+            <i class="bi me-1"
+               [class.bi-check-circle-fill]="/[!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?]/.test(password)"
+               [class.bi-x-circle-fill]="!/[!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?]/.test(password)"></i>
+            One special character
+          </li>
+        </ul>
       </div>
-      <button type="submit" class="btn btn-success w-100" [disabled]="loading">
+
+      <!-- Submit — disabled until all rules pass -->
+      <button type="submit" class="btn btn-success w-100 mt-2"
+              [disabled]="loading || !passwordValid">
         <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-        {{ loading ? 'Creating...' : 'Create Account' }}
+        {{ loading ? 'Creating account...' : 'Create Account' }}
       </button>
     </form>
 

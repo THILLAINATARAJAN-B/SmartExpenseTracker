@@ -3,6 +3,7 @@ package com.smartexpense.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ExpenseDTO {
     private Long id;
 
     @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title must be under 100 characters")  // ← ADDED
     private String title;
 
     @NotNull(message = "Amount is required")
@@ -27,6 +29,7 @@ public class ExpenseDTO {
     @NotBlank(message = "Category is required")
     private String category;
 
+    @Size(max = 255, message = "Description too long")                // ← ADDED
     private String description;
 
     @NotNull(message = "Date is required")
