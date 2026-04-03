@@ -38,7 +38,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        
+        config.setAllowedOriginPatterns(List.of("*"));  // ← allow all for healthcheck
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
@@ -70,7 +71,7 @@ public class SecurityConfig {
                     "/api-docs/**",
                     "/swagger-resources/**",
                     "/webjars/**",
-                    "/actuator/health"
+                    "/actuator/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
