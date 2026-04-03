@@ -1,8 +1,0 @@
-[build]
-builder = "nixpacks"
-
-[build.env]
-NIXPACKS_BUILD_CMD = "npm install && npm run build -- --configuration production"
-
-[deploy]
-startCommand = "npx serve -s dist/smart-expense-frontend -l 3000"
