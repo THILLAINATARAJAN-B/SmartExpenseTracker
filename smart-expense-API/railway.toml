@@ -6,6 +6,4 @@ NIXPACKS_BUILD_CMD = "mvn clean package -DskipTests"
 
 [deploy]
 startCommand = "java -jar target/*.jar"
-healthcheckPath = "/actuator/health"
-healthcheckTimeout = 120        # ← give 120s for Spring to boot
 restartPolicyType = "on_failure"
