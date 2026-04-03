@@ -31,5 +31,6 @@ com\smartexpense\config\JwtConfig.class
 com\smartexpense\controller\CsvExportController.class
 com\smartexpense\dto\UserDTO$UserDTOBuilder.class
 com\smartexpense\entity\Budget$BudgetBuilder.class
+com\smartexpense\config\OpenApiConfig.class
 com\smartexpense\controller\ExpenseController.class
 com\smartexpense\config\SwaggerConfig.class

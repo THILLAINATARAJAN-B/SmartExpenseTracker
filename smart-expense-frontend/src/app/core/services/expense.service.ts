@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Expense } from '../models/expense.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ExpenseService {
 
-  private apiUrl = 'http://localhost:8080/api/expenses';
+  private apiUrl = `${environment.apiUrl}/expenses`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,10 +27,11 @@ export class ExpenseService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  exportCsv(userId: number): Observable<Blob> {
-    return this.http.get(
-      `http://localhost:8080/api/export/expenses/${userId}`,
-      { responseType: 'blob' }
-    );
-  }
+// Also fix the export URL:
+exportCsv(userId: number): Observable<Blob> {
+  return this.http.get(
+    `${environment.apiUrl}/export/expenses/${userId}`,
+    { responseType: 'blob' }
+  );
+}
 }

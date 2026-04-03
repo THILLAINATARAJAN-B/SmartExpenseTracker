@@ -11,6 +11,7 @@ D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\m
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\controller\AuthController.java
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\dto\UserDTO.java
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\service\BudgetService.java
+D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\config\OpenApiConfig.java
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\dto\DashboardDTO.java
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\exception\GlobalExceptionHandler.java
 D:\CARRIER\PROJECTS\JAVA\NEW PROJECT\SmartExpenseTracker\smart-expense-API\src\main\java\com\smartexpense\repository\ExpenseRepository.java

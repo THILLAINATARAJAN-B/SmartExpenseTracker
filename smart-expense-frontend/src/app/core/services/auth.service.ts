@@ -3,27 +3,29 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { LoginRequest, RegisterRequest, AuthResponse } from '../models/user.model';
+import { environment } from '../../../environments/environment'; // ← ADD THIS
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.apiUrl; // ← REPLACE hardcoded string
 
   constructor(private http: HttpClient, private router: Router) {}
 
-    login(credentials: LoginRequest): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
-        tap(response => {
-        console.log('Login response:', response); // ← debug
+  login(credentials: LoginRequest): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/users/login`, credentials).pipe(
+      tap(response => {
+        console.log('Login response:', response);
         localStorage.setItem('token', response.token);
-        // ✅ Handle both userId and id fields
         const uid = response.userId || response.id || '';
         localStorage.setItem('userId', uid.toString());
         localStorage.setItem('userName', response.name || '');
         localStorage.setItem('userEmail', response.email || '');
-        })
+      })
     );
-    }
+  }
+  // ... rest stays same
+
 
   register(data: RegisterRequest): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/users/register`, data);
