@@ -50,14 +50,14 @@ class UserServiceTest {
         mockUserDTO = UserDTO.builder()
                 .name("Thill")
                 .email("thill@gmail.com")
-                .password("123456")
+                .password("Test@1234")
                 .build();
     }
 
     @Test
     void registerUser_Success() {
         when(userRepository.existsByEmail(anyString())).thenReturn(false);
-        when(passwordEncoder.encode(anyString())).thenReturn("$2a$10$hashedpassword");
+        
         when(userRepository.save(any(User.class))).thenReturn(mockUser);
 
         UserDTO result = userService.registerUser(mockUserDTO);
@@ -67,7 +67,7 @@ class UserServiceTest {
         assertEquals("thill@gmail.com", result.getEmail());
         assertEquals("***", result.getPassword());
         verify(userRepository, times(1)).save(any(User.class));
-        verify(passwordEncoder, times(1)).encode("123456");
+        verify(passwordEncoder, times(1)).encode("Test@1234");
     }
 
     @Test
